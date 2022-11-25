@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSellersFetch } from "../../store/reducers/sellers";
 import { SellerType } from "../../store/types/sellers";
 import { useEffect } from "react";
-import { deleteSeller } from "../../store/actions/seller.actions.types";
 import {
   Container,
   AddButtonContainer,
@@ -12,6 +11,8 @@ import {
   InfoContainer,
   ButtonContainer,
 } from "./style";
+import { deleteSellerRequest } from "../../store/reducers/deleteSeller";
+import { resetMessage } from "../../store/reducers/createSeller";
 
 export default function SellerList() {
   const sellers = useSelector(
@@ -46,7 +47,12 @@ export default function SellerList() {
     <Container>
       <Header />
       <AddButtonContainer>
-        <button onClick={() => navigate("/seller-form")}>
+        <button
+          onClick={() => {
+            dispatch(resetMessage());
+            navigate("/seller-form");
+          }}
+        >
           Adicionar Empresa
         </button>
       </AddButtonContainer>
@@ -72,7 +78,7 @@ export default function SellerList() {
                 <button>Editar</button>
                 <button
                   onClick={() =>
-                    dispatch(deleteSeller({ sellerId: sellers.id }))
+                    dispatch(deleteSellerRequest({ sellerId: sellers.id }))
                   }
                 >
                   Excluir

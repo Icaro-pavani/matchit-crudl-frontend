@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {
   reloadPage: boolean;
@@ -14,6 +14,13 @@ const deleteSellerSlice = createSlice({
   name: "deleteSeller",
   initialState,
   reducers: {
+    deleteSellerRequest: (
+      state,
+      action: PayloadAction<{ sellerId: number }>
+    ) => {
+      state.isLoading = true;
+      state.isFailure = false;
+    },
     deleteSellerSuccess: (state) => {
       state.reloadPage = !state.reloadPage;
       state.isLoading = false;
@@ -25,7 +32,7 @@ const deleteSellerSlice = createSlice({
   },
 });
 
-export const { deleteSellerFailure, deleteSellerSuccess } =
+export const { deleteSellerFailure, deleteSellerRequest, deleteSellerSuccess } =
   deleteSellerSlice.actions;
 
 export default deleteSellerSlice.reducer;

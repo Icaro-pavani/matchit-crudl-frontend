@@ -13,5 +13,15 @@ async function deleteSeller(sellerId: number) {
   await baseAPI.delete(`/sellers/${sellerId}`);
 }
 
-const api = { getSellers, deleteSeller };
+export interface SellerData {
+  name: string;
+  cnpj: string;
+  address: string;
+}
+
+async function createSeller(sellerData: SellerData) {
+  return baseAPI.post("/sellers", sellerData);
+}
+
+const api = { getSellers, deleteSeller, createSeller };
 export default api;
