@@ -9,5 +9,9 @@ async function getSellers() {
   return baseAPI.get<{ data: SellerType[] }>("/sellers");
 }
 
-const api = { getSellers };
+async function deleteSeller(sellerId: number) {
+  await baseAPI.delete(`/sellers/${sellerId}`);
+}
+
+const api = { getSellers, deleteSeller };
 export default api;

@@ -11,7 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SellerList />} />
-          <Route path="/edit/:code" element={<SellerFormPage />} />
+          <Route path="/seller-form" element={<SellerFormPage />} />
+          <Route path="/seller-form/:code" element={<SellerFormPage />} />
         </Routes>
       </BrowserRouter>
     </>

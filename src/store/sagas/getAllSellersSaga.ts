@@ -1,7 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import api from "../../services/api";
 import { SellerType } from "../types/sellers";
-import { getSellersFailure, getSellersSuccess } from "../reducers/sellers";
+import {
+  getSellersFailure,
+  getSellersFetch,
+  getSellersSuccess,
+} from "../reducers/sellers";
 
 function* workGetSellersFetch() {
   try {
@@ -14,8 +18,8 @@ function* workGetSellersFetch() {
   }
 }
 
-function* sellersSaga() {
-  yield takeEvery("sellers/getSellersFetch", workGetSellersFetch);
+function* getAllSellersSaga() {
+  yield takeEvery(getSellersFetch, workGetSellersFetch);
 }
 
-export default sellersSaga;
+export default getAllSellersSaga;
