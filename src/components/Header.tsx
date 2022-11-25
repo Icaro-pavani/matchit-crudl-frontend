@@ -15,19 +15,17 @@ const HeaderContainer = styled.div`
   height: 130px;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    267.08deg,
-    #79acfa 0%,
-    rgba(196, 16, 145, 0.5) 100%
-  );
+  background: linear-gradient(267.08deg, #5e5e5e 0%, #ff6127 100%);
   padding: 15px;
   margin-bottom: 20px;
 
   h1 {
     color: #fff;
+    width: 100%;
     font-size: 36px;
     font-weight: bold;
     font-style: oblique;
+    text-align: center;
 
     &:hover {
       cursor: pointer;

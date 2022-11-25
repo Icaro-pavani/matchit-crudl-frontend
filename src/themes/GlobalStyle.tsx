@@ -135,7 +135,7 @@ const GlobalStyle = createGlobalStyle`
 
     html,
     body {
-        background-color: #a6cdf8;
+        background-color: #333333;
     }
 
     ::placeholder {

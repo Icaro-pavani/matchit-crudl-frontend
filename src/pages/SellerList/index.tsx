@@ -46,8 +46,6 @@ export default function SellerList() {
     navigate(`/seller-form/${id}`);
   }
 
-  console.log(deleteSellerInfo);
-
   return (
     <Container>
       <Header />
@@ -57,21 +55,24 @@ export default function SellerList() {
             dispatch(resetMessage());
             navigate("/seller-form");
           }}
+          disabled={sellers.isLoading || deleteSellerInfo.isLoading}
         >
           Adicionar Empresa
         </button>
       </AddButtonContainer>
       <ListContainer>
         {sellers.isFailure ? (
-          "serviço indisponível ou conexão não possível"
+          <h2>
+            Serviço indisponível ou conexão não possível, atualize a página em
+            alguns instantes.
+          </h2>
         ) : sellers.sellersData.length > 0 ? (
           sellers.sellersData.map((seller) => (
             <li key={seller.id}>
               <InfoContainer>
-                <h2>{seller.name}</h2>
-                <h3>
+                <h2>
                   <span>Nome:</span> {seller.name}
-                </h3>
+                </h2>
                 <h3>
                   <span>CNPJ:</span> {seller.cnpj}
                 </h3>
@@ -80,17 +81,25 @@ export default function SellerList() {
                 </h3>
               </InfoContainer>
               <ButtonContainer>
-                <button onClick={() => editSeller(seller.id)}>Editar</button>
+                <button
+                  onClick={() => editSeller(seller.id)}
+                  disabled={sellers.isLoading || deleteSellerInfo.isLoading}
+                >
+                  Editar
+                </button>
                 <button
                   onClick={() =>
                     dispatch(deleteSellerRequest({ sellerId: seller.id }))
                   }
+                  disabled={sellers.isLoading || deleteSellerInfo.isLoading}
                 >
                   Excluir
                 </button>
               </ButtonContainer>
             </li>
           ))
+        ) : sellers.isLoading ? (
+          <h2>Carregando...</h2>
         ) : (
           <h2>Não há nenhum registro de empresa!</h2>
         )}

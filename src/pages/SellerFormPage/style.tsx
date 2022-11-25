@@ -9,6 +9,12 @@ export const EditContainer = styled.div`
   margin: 0 auto;
   padding-bottom: 10px;
 
+  h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -20,15 +26,27 @@ export const EditContainer = styled.div`
       width: 90px;
       height: 40px;
       color: #f2f2f2;
-      background-color: #2273ec;
+      background-color: #333333;
       border: none;
       border-radius: 5px;
       font-size: 16px;
 
       &:hover {
-        background-color: #2233ec;
+        background-color: #1cb092;
         cursor: pointer;
       }
+
+      &:disabled {
+        background-color: #7a7777;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #e90505;
     }
   }
 `;
@@ -41,17 +59,12 @@ export const InputContainer = styled.div`
 
   label {
     font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 3px;
   }
 
-  select,
   input {
     height: 30px;
-    font-size: 16px;
-    padding-left: 5px;
-  }
-
-  textarea {
-    height: 80px;
     font-size: 16px;
     padding-left: 5px;
   }

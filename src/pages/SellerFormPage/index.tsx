@@ -33,7 +33,6 @@ export default function SellerFormPage() {
 
     if (!!id) {
       const sellerId = Number(id);
-      console.log(sellerId);
       dispatch(getOneSellerRequest({ sellerId }));
     }
   }, [navigate, sellerInfo.message, dispatch, id]);
@@ -59,7 +58,6 @@ export default function SellerFormPage() {
     }
   }
 
-  console.log(sellerInfo);
   return (
     <EditContainer>
       <Header />
@@ -96,7 +94,9 @@ export default function SellerFormPage() {
           />
         </InputContainer>
         <p>{!sellerInfo.message ? "" : sellerInfo.message}</p>
-        <button type="submit">{id ? "Atualizar" : "Confirmar"}</button>
+        <button type="submit" disabled={sellerInfo.isLoading}>
+          {id ? "Atualizar" : "Confirmar"}
+        </button>
       </form>
     </EditContainer>
   );
