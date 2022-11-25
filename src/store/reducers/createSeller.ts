@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SellerData } from "../../services/api";
 import masks from "../../utils/masks";
+import { SellerType } from "../types/sellers";
 
 const initialState: {
   sellerInfoData: SellerData;
@@ -22,6 +23,11 @@ const createSellerSlice = createSlice({
   reducers: {
     resetMessage: (state) => {
       state.message = "";
+      state.sellerInfoData = {
+        name: "",
+        cnpj: "",
+        address: "",
+      };
     },
     createSellerUpdateInfo: (
       state,
@@ -59,6 +65,55 @@ const createSellerSlice = createSlice({
       state.isLoading = false;
       state.message = action.payload.message;
     },
+    getOneSellerRequest: (
+      state,
+      action: PayloadAction<{ sellerId: number }>
+    ) => {
+      state.isLoading = true;
+      state.message = "";
+    },
+    getOneSellerSuccess: (
+      state,
+      action: PayloadAction<{ sellerInfoData: SellerType }>
+    ) => {
+      const { name, cnpj, address } = action.payload.sellerInfoData;
+      state.sellerInfoData = { name, cnpj, address };
+      state.isLoading = false;
+      state.message = "";
+    },
+    getOneSellerFailure: (
+      state,
+      action: PayloadAction<{ message: string }>
+    ) => {
+      state.isLoading = true;
+      state.message = action.payload.message;
+    },
+    updateSellerRequest: (
+      state,
+      action: PayloadAction<{ sellerData: SellerData; sellerId: number }>
+    ) => {
+      state.isLoading = true;
+      state.message = "";
+    },
+    updateSellerSuccess: (
+      state,
+      action: PayloadAction<{ message: string }>
+    ) => {
+      state.message = action.payload.message;
+      state.isLoading = false;
+      state.sellerInfoData = {
+        name: "",
+        cnpj: "",
+        address: "",
+      };
+    },
+    updateSellerFailure: (
+      state,
+      action: PayloadAction<{ message: string }>
+    ) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
   },
 });
 
@@ -68,6 +123,12 @@ export const {
   createSellerSuccess,
   createSellerRequest,
   resetMessage,
+  getOneSellerRequest,
+  getOneSellerFailure,
+  getOneSellerSuccess,
+  updateSellerFailure,
+  updateSellerRequest,
+  updateSellerSuccess,
 } = createSellerSlice.actions;
 
 export default createSellerSlice.reducer;

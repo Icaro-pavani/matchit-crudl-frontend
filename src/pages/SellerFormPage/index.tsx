@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import { SellerData } from "../../services/api";
 import {
   createSellerRequest,
   createSellerUpdateInfo,
+  getOneSellerRequest,
+  updateSellerRequest,
 } from "../../store/reducers/createSeller";
 import { EditContainer, InputContainer } from "./style";
 
 export default function SellerFormPage() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,10 +27,16 @@ export default function SellerFormPage() {
   );
 
   useEffect(() => {
-    if (sellerInfo.message === "created") {
+    if (sellerInfo.message === "created" || sellerInfo.message === "updated") {
       navigate("/");
     }
-  }, [navigate, sellerInfo.message]);
+
+    if (!!id) {
+      const sellerId = Number(id);
+      console.log(sellerId);
+      dispatch(getOneSellerRequest({ sellerId }));
+    }
+  }, [navigate, sellerInfo.message, dispatch, id]);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -42,7 +51,12 @@ export default function SellerFormPage() {
 
     const { sellerInfoData } = sellerInfo;
 
-    dispatch(createSellerRequest({ sellerInfo: sellerInfoData }));
+    if (!id) {
+      dispatch(createSellerRequest({ sellerInfo: sellerInfoData }));
+    } else {
+      const sellerId = Number(id);
+      dispatch(updateSellerRequest({ sellerData: sellerInfoData, sellerId }));
+    }
   }
 
   console.log(sellerInfo);
@@ -82,7 +96,7 @@ export default function SellerFormPage() {
           />
         </InputContainer>
         <p>{!sellerInfo.message ? "" : sellerInfo.message}</p>
-        <button type="submit">Confirmar</button>
+        <button type="submit">{id ? "Atualizar" : "Confirmar"}</button>
       </form>
     </EditContainer>
   );

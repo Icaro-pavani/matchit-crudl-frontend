@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SellerList />} />
           <Route path="/seller-form" element={<SellerFormPage />} />
-          <Route path="/seller-form/:code" element={<SellerFormPage />} />
+          <Route path="/seller-form/:id" element={<SellerFormPage />} />
         </Routes>
       </BrowserRouter>
     </>

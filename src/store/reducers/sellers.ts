@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SellerType } from "../types/sellers";
 
 const initialState: {
-  sellers: SellerType[];
+  sellersData: SellerType[];
   isLoading: boolean;
   isFailure: boolean;
 } = {
-  sellers: [],
+  sellersData: [],
   isLoading: false,
   isFailure: false,
 };
@@ -20,7 +20,7 @@ const sellerSlice = createSlice({
       state.isFailure = false;
     },
     getSellersSuccess: (state, action) => {
-      state.sellers = action.payload;
+      state.sellersData = action.payload;
       state.isLoading = false;
     },
     getSellersFailure: (state) => {

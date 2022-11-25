@@ -18,7 +18,7 @@ export default function SellerList() {
   const sellers = useSelector(
     (state: {
       sellers: {
-        sellers: SellerType[];
+        sellersData: SellerType[];
         isLoading: boolean;
         isFailure: boolean;
       };
@@ -41,6 +41,11 @@ export default function SellerList() {
     dispatch(getSellersFetch());
   }, [dispatch, deleteSellerInfo.reloadPage]);
 
+  function editSeller(id: number) {
+    dispatch(resetMessage());
+    navigate(`/seller-form/${id}`);
+  }
+
   console.log(deleteSellerInfo);
 
   return (
@@ -59,26 +64,26 @@ export default function SellerList() {
       <ListContainer>
         {sellers.isFailure ? (
           "serviço indisponível ou conexão não possível"
-        ) : sellers.sellers.length > 0 ? (
-          sellers.sellers.map((sellers) => (
-            <li key={sellers.id}>
+        ) : sellers.sellersData.length > 0 ? (
+          sellers.sellersData.map((seller) => (
+            <li key={seller.id}>
               <InfoContainer>
-                <h2>{sellers.name}</h2>
+                <h2>{seller.name}</h2>
                 <h3>
-                  <span>Nome:</span> {sellers.name}
+                  <span>Nome:</span> {seller.name}
                 </h3>
                 <h3>
-                  <span>CNPJ:</span> {sellers.cnpj}
+                  <span>CNPJ:</span> {seller.cnpj}
                 </h3>
                 <h3>
-                  <span>Endreço:</span> {sellers.address}
+                  <span>Endreço:</span> {seller.address}
                 </h3>
               </InfoContainer>
               <ButtonContainer>
-                <button>Editar</button>
+                <button onClick={() => editSeller(seller.id)}>Editar</button>
                 <button
                   onClick={() =>
-                    dispatch(deleteSellerRequest({ sellerId: sellers.id }))
+                    dispatch(deleteSellerRequest({ sellerId: seller.id }))
                   }
                 >
                   Excluir

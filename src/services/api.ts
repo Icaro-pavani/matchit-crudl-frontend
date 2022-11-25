@@ -23,5 +23,22 @@ async function createSeller(sellerData: SellerData) {
   return baseAPI.post("/sellers", sellerData);
 }
 
-const api = { getSellers, deleteSeller, createSeller };
+async function updateSeller(updateInfo: {
+  sellerData: SellerData;
+  sellerId: number;
+}) {
+  return baseAPI.put(`/sellers/${updateInfo.sellerId}`, updateInfo.sellerData);
+}
+
+async function getOneSeller(sellerId: number) {
+  return baseAPI.get(`/sellers/${sellerId}`);
+}
+
+const api = {
+  getSellers,
+  deleteSeller,
+  createSeller,
+  updateSeller,
+  getOneSeller,
+};
 export default api;
