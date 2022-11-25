@@ -1,11 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
+import { useSelector, useDispatch } from "react-redux";
+import { getSellersFetch } from "../store/reducers/sellers";
+import { SellerType } from "../store/types/sellers";
+import { useEffect } from "react";
 
 export default function SellerList() {
+  const sellers = useSelector(
+    (state: {
+      sellers: {
+        sellers: SellerType[];
+        isLoading: boolean;
+        isFailure: boolean;
+      };
+    }) => state.sellers
+  );
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const products: { _id: number; name: string }[] = [];
+  useEffect(() => {
+    dispatch(getSellersFetch());
+  }, [dispatch]);
+
+  console.log(sellers);
+
   return (
     <Container>
       <Header />
@@ -13,17 +32,25 @@ export default function SellerList() {
         <button>Adiconar Empresa</button>
       </AddButtonContainer>
       <ListContainer>
-        {products.length > 0 ? (
-          products.map((food) => (
-            <li key={food._id}>
+        {sellers.isFailure ? (
+          "serviço indisponível ou conexão não possível"
+        ) : sellers.sellers.length > 0 ? (
+          sellers.sellers.map((sellers) => (
+            <li key={sellers.id}>
               <InfoContainer>
-                <h2>{food.name}</h2>
+                <h2>{sellers.name}</h2>
                 <h3>
-                  <span>Nome:</span> {food.name}
+                  <span>Nome:</span> {sellers.name}
+                </h3>
+                <h3>
+                  <span>CNPJ:</span> {sellers.cnpj}
+                </h3>
+                <h3>
+                  <span>Endreço:</span> {sellers.address}
                 </h3>
               </InfoContainer>
               <ButtonContainer>
-                <button>Abrir</button>
+                <button>Editar</button>
                 <button>Excluir</button>
               </ButtonContainer>
             </li>
